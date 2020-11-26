@@ -1,4 +1,4 @@
-#!/Users/Kobe James/Documents/Bootcamp/week15/FinalProject/env/bin/python3
+#!/Users/Kobe James/Documents/Bootcamp/week15/FinalProject/FinalProject/env/bin/python3
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 

@@ -1,10 +1,37 @@
-from rest_framework import generics
-from .models import Products, Category, Orders
-from .serializers import ProductSerializer
-# Create your views here.
+from rest_framework import generics, permissions
+from rest_framework import viewsets
+from django.contrib.auth import get_user_model
+from .models import Product, Category
+from .serializers import ProductSerializer, UserSerializer
+from .permissions import IsAuthorOrReadOnly
 
-class ProductsApiView(generics.ListCreateAPIView):
-    queryset = Products.objects.all()
+
+User = get_user_model()
+
+
+class ProductListApiView(generics.ListCreateAPIView):
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
+class ProductDetailApiView(generics.RetrieveUpdateDestroyAPIView):
+    # permission_classes = (IsAuthorOrReadOnly, permissions.IsAuthenticatedOrReadOnly)
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+
+
+
+
+
+
+# class UserList(generics.ListCreateAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+
+
+# class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
