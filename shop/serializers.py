@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Product
+from .models import Product, Category
 
 
 User = get_user_model()
@@ -10,6 +10,23 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Product
+
+
+class CategoryApiSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = (
+            'id', 'title',
+        )
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if instance.children.exists():
+            representation['children'] = CategoryApiSerializer(
+                instance.children.all(), many=True
+            ).data
+        return representation
 
 
 class UserSerializer(serializers.ModelSerializer):
