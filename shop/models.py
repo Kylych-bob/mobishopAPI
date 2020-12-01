@@ -20,8 +20,8 @@ class Category(models.Model):
 
     def __str__(self):
         if self.parent:
-            return f"{self.parent}-->{self.title}"
-        return self.title
+            return f"{self.parent}-->{self.title}-->{self.id}"
+        return f"{self.title} --> {self.id}"
 
 
 
@@ -42,6 +42,13 @@ class Product(models.Model):
         return self.title
 
 
+
+class Choosen(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.product} --> {self.user}'
 
 # class Orders(models.Model):
 #     date = models.DateTimeField(auto_now_add=True)
